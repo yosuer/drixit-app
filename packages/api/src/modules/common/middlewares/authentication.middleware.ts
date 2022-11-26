@@ -11,7 +11,7 @@ export const authenticationJWT = (
   next: NextFunction,
 ) => {
   const { authorization } = req.headers;
-  console.log('authorization: ', authorization);
+  console.log(' verifying authorization: ', authorization);
   try {
     if (authorization) {
       const decoded = jwt.verify(authorization, JWT_PRIVATE_KEY) as JwtPayload;
@@ -21,6 +21,6 @@ export const authenticationJWT = (
     throw new UnauthorizedException();
   } catch (err) {
     console.log('err: ', err);
-    throw new UnauthorizedException();
+    next(err);
   }
 };

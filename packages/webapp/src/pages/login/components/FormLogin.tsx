@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Col, Form, Row } from "antd";
 import { Formik } from "formik";
 import { Divider } from "antd";
 import * as Yup from "yup";
 import InputField from "../../../components/InputField";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 const schema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -11,6 +12,7 @@ const schema = Yup.object().shape({
 });
 
 const FormLogin = () => {
+  const auth = useContext(AuthContext);
   const [showInputPassword, setShowInputPassword] = useState(false);
   const yupSync = {
     validator: async ({ field }: any, value: any) => {
@@ -27,10 +29,10 @@ const FormLogin = () => {
         }}
         validationSchema={schema}
         onSubmit={(values) => {
-          console.log("values", values);
+          return auth.signin(values.email, values.password);
         }}
       >
-        {({ handleSubmit, errors, values, isValid }) => {
+        {({ handleSubmit, errors, values, isValid, isSubmitting }) => {
           return (
             <Form layout="vertical" onFinish={handleSubmit}>
               <Col xs={24}>Log in to your account</Col>
@@ -57,7 +59,7 @@ const FormLogin = () => {
                     <Button
                       htmlType="submit"
                       type="primary"
-                      disabled={!isValid}
+                      disabled={!isValid || isSubmitting}
                     >
                       Login
                     </Button>

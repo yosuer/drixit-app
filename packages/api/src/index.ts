@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import authController from './modules/auth/controllers';
 import userController from './modules/users/controllers';
 import { errorHandler } from './modules/common/middlewares';
@@ -9,7 +10,7 @@ const baseApi = '/api/v1';
 
 const app = express();
 
-app.use(express.json(), express.urlencoded({ extended: true }));
+app.use(express.json(), express.urlencoded({ extended: true }), cors());
 
 app.use(baseApi, authController);
 

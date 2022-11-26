@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
 import { Routes, Route } from "react-router-dom";
-import DashboardPage from './pages/dashboard';
-import LoginPage from './pages/login';
-import RequireAuth from './providers/RequireAuth';
+import DashboardPage from "./pages/dashboard";
+import LoginPage from "./pages/login";
+import AuthProvider from "./providers/AuthProvider";
+import RequireAuth from "./providers/RequireAuth";
 
 function App() {
   return (
-    <div>
+    <AuthProvider>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route
@@ -18,7 +19,7 @@ function App() {
           }
         />
       </Routes>
-    </div>
+    </AuthProvider>
   );
 }
 
