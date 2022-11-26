@@ -1,0 +1,16 @@
+.LoginPage {
+  min-height: 100vh;
+}
+
+.LeftColumn {
+  height: auto;
+}
+
+.FormContainer {
+  height: 100%;
+}
+
+.RightColumn {
+  height: auto;
+  background-color: #00674A;
+}
