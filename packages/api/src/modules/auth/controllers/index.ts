@@ -1,11 +1,18 @@
 import { NextFunction, Request, Response, Router } from 'express';
+import { UserRepositoryImpl } from '../../../modules/users/repositories/user.repository.impl';
+import { EncryptionService } from '../../../services/encryption.service';
 import { FindUserByEmailUseCase } from '../../users/usecases/find-user-by-email.usecase';
 import { LoginUserUseCase } from '../usecases/login-user.usecase';
 
 const router = Router();
 
-const findUserByEmailUseCase = new FindUserByEmailUseCase();
-const loginUserUseCase = new LoginUserUseCase(findUserByEmailUseCase);
+const userRepository = new UserRepositoryImpl();
+const findUserByEmailUseCase = new FindUserByEmailUseCase(userRepository);
+const encryptionService = new EncryptionService();
+const loginUserUseCase = new LoginUserUseCase(
+  findUserByEmailUseCase,
+  encryptionService,
+);
 
 router.post(
   '/login',

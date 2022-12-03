@@ -9,7 +9,7 @@ const LoginPage = () => {
         <FormLogin />
       </Col>
       <Col xs={0} md={12} lg={14} xl={18} xxl={20} className="RightColumn">
-        Col 2
+        Some img
       </Col>
     </Row>
   );

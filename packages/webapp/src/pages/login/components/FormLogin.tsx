@@ -43,6 +43,7 @@ const FormLogin = () => {
                   label="Email Address"
                   rule={yupSync}
                   type="email"
+                  autoComplete="email"
                 />
               </Col>
               {showInputPassword ? (
@@ -53,6 +54,7 @@ const FormLogin = () => {
                       label="Password"
                       rule={yupSync}
                       type="password"
+                      autoComplete="new-password"
                     />
                   </Col>
                   <Col xs={24}>

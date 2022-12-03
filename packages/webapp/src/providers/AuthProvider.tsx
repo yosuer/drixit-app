@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import { createContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getLoggedUser, loginUser } from "../services/authentication";
@@ -14,13 +15,14 @@ export const AuthContext = createContext<AuthContextType>(null!);
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<any>(null);
   const [isFetching, setIsFetching] = useState<boolean>(true);
+  const [api, contextHolder] = notification.useNotification();
   const navigate = useNavigate();
   const location = useLocation();
+
   const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
     const verifyLogin = async () => {
-      console.log("verifylogin");
       setIsFetching(true);
       const user = await getLoggedUser();
       if (user) {
@@ -40,7 +42,12 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(user);
       navigate(from, { replace: true });
     } else {
-      console.log("Errrorrrr login");
+      api.error({
+        message: "Login error",
+        description: "Please provide a valid email address and password.",
+        placement: "bottomLeft",
+        duration: 3,
+      });
     }
   };
 
@@ -51,7 +58,12 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const value = { user, signin, signout, isFetching };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <>
+      {contextHolder}
+      <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+    </>
+  );
 }
 
 export default AuthProvider;

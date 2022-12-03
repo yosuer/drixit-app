@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import logger from '../../../logger';
 import { UnauthorizedException } from '../../auth/exceptions/unauthorized.exception';
 import { JwtPayload } from '../../auth/types/jwt-payload';
 
@@ -11,7 +12,6 @@ export const authenticationJWT = (
   next: NextFunction,
 ) => {
   const { authorization } = req.headers;
-  console.log(' verifying authorization: ', authorization);
   try {
     if (authorization) {
       const decoded = jwt.verify(authorization, JWT_PRIVATE_KEY) as JwtPayload;
@@ -20,7 +20,7 @@ export const authenticationJWT = (
     }
     throw new UnauthorizedException();
   } catch (err) {
-    console.log('err: ', err);
+    logger.error(err, 'Error authentication');
     next(err);
   }
 };

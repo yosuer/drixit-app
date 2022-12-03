@@ -6,9 +6,16 @@ interface Props {
   label: string;
   rule: any;
   type: string;
+  autoComplete: string;
 }
 
-const InputField = ({ name, label, rule, type = "text" }: Props) => {
+const InputField = ({
+  name,
+  label,
+  rule,
+  type = "text",
+  autoComplete,
+}: Props) => {
   return (
     <Field name={name}>
       {({ field, meta }: FieldProps) => (
@@ -19,7 +26,11 @@ const InputField = ({ name, label, rule, type = "text" }: Props) => {
           hasFeedback
           validateStatus={meta.error && "error"}
         >
-          <Input type={type} onChange={field.onChange} />
+          <Input
+            type={type}
+            onChange={field.onChange}
+            autoComplete={autoComplete}
+          />
         </Form.Item>
       )}
     </Field>

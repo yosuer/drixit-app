@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiHost = "http://localhost:5001/api/v1";
+const apiHost = process.env.REACT_APP_API_HOST;
 
 export const getLoggedUser = async (): Promise<any> => {
   try {
@@ -13,7 +13,7 @@ export const getLoggedUser = async (): Promise<any> => {
     }
     return null;
   } catch (err) {
-    console.log("getLoggedUser error", err);
+    console.error("getLoggedUser error", err);
     return null;
   }
 };
@@ -27,10 +27,6 @@ export const loginUser = async (
       email,
       password,
     });
-    console.log(
-      "🚀 ~ file: AuthProvider.tsx ~ line 21 ~ signin ~ response",
-      response
-    );
     if (response.status === 200) {
       const { token } = response.data;
       localStorage.setItem("token", token);
@@ -38,7 +34,7 @@ export const loginUser = async (
     }
     return null;
   } catch (err) {
-    console.log("loginUser error", err);
+    console.error("loginUser error", err);
     return null;
   }
 };

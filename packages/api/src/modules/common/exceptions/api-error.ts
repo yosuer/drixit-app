@@ -1,4 +1,4 @@
-export class ApiError extends Error {
+export abstract class ApiError extends Error {
   readonly type: string;
 
   constructor(type: string, message: string) {
